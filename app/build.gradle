@@ -64,6 +64,7 @@ dependencies {
 
     // Room components
     implementation "androidx.room:room-runtime:2.2.5"
+    androidTestImplementation 'org.mockito:mockito-android:5.3.0'
     kapt "androidx.room:room-compiler:2.2.5"
     implementation "androidx.room:room-ktx:2.2.5"
     androidTestImplementation "androidx.room:room-testing:2.2.5"
@@ -107,8 +108,13 @@ dependencies {
 
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    //implementation 'com.todkars:shimmer-recyclerview:0.4.0'
+//    implementation 'com.todkars:shimmer-recyclerview:0.4.1'
 
     // Jsoup
     implementation 'org.jsoup:jsoup:1.13.1'
+
+    testImplementation "org.mockito:mockito-core:3.8.0"
+    androidTestImplementation 'org.mockito:mockito-android:3.8.0'
+    androidTestImplementation 'androidx.fragment:fragment-testing:1.4.0'
+
 }
