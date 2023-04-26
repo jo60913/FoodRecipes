@@ -1,4 +1,4 @@
-package com.example.foodrecipes
+package com.example.foodrecipes.viewmodel
 
 import android.app.Application
 import android.content.Context
