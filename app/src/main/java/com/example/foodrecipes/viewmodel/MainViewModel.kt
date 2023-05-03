@@ -4,13 +4,13 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.foodrecipes.data.Repository
+import com.example.foodrecipes.data.database.ReceipesEntity
 import com.example.foodrecipes.module.FoodReceipt
 import com.example.foodrecipes.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import javax.inject.Inject
@@ -21,7 +21,17 @@ class MainViewModel @Inject constructor(
     application: Application
 ):AndroidViewModel(application) {
 
+    /** Room Database */
+    val readRecipes:LiveData<List<ReceipesEntity>> = repository.local.readDatabase().asLiveData()
+
+    private fun insertRecipes(receipesEntity: ReceipesEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertRecipes(receipesEntity)
+        }
+
+    /** Retrofit */
     var recipesResponse : MutableLiveData<NetworkResult<FoodReceipt>> = MutableLiveData()
+
 
     fun getRecipes(queries : Map<String,String>) = viewModelScope.launch {
         getReceipesSafeCall(queries)
@@ -33,12 +43,21 @@ class MainViewModel @Inject constructor(
             try {
                 val response = repository.remote.getRecipes(queries)
                 recipesResponse.value = handleFoodRecipesresponse(response)
+                
+                val foodReceipt = recipesResponse.value!!.data
+                if(foodReceipt != null)
+                    offlineCacheRecipes(foodReceipt)
             }catch (e:java.lang.Exception){
                 recipesResponse.value = NetworkResult.Error("找不到食譜")
             }
         }else{
             recipesResponse.value = NetworkResult.Error("沒有網路")
         }
+    }
+
+    private fun offlineCacheRecipes(foodReceipt: FoodReceipt) {
+        val recipesEntity = ReceipesEntity(foodReceipt)
+        insertRecipes(recipesEntity)
     }
 
     /**

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodrecipes.viewmodel.MainViewModel
 import com.example.foodrecipes.R
@@ -17,6 +18,7 @@ import com.example.foodrecipes.util.Constants.Companion.API_KEY
 import com.example.foodrecipes.util.NetworkResult
 import com.example.foodrecipes.viewmodel.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
@@ -33,8 +35,21 @@ class RecipesFragment : Fragment() {
         Databinding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipes, container, false)
 
         setRecyclerView()
-        reqestApiData()
+//        reqestApiData()
+        readDatabase()
         return Databinding!!.root
+    }
+
+    private fun readDatabase() {
+        lifecycleScope.launch{
+            mainviewmodel.readRecipes.observe(viewLifecycleOwner) { database ->
+                if (database.isNotEmpty()) {
+                    mAdapter.setData(database[0].foodReceipt)
+                }else{
+                    requestApiData()
+                }
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,9 +63,7 @@ class RecipesFragment : Fragment() {
         Databinding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
 
-
-
-    private fun reqestApiData(){
+    private fun requestApiData(){
         mainviewmodel.getRecipes(receipesViewModel.allyQuery())
         mainviewmodel.recipesResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
@@ -60,6 +73,7 @@ class RecipesFragment : Fragment() {
                     }
                 }
                 is NetworkResult.Error -> {
+                    loadDataFromCache() //如果資料有錯誤就顯示載入前的畫面
                     Toast.makeText(
                         requireContext(),
                         response.message.toString(),
@@ -70,6 +84,16 @@ class RecipesFragment : Fragment() {
 
                 }
 
+            }
+        }
+    }
+
+    private fun loadDataFromCache(){
+        lifecycleScope.launch{
+            mainviewmodel.readRecipes.observe(viewLifecycleOwner){ database ->
+                if(database.isNotEmpty()){
+                    mAdapter.setData(database[0].foodReceipt)
+                }
             }
         }
     }
