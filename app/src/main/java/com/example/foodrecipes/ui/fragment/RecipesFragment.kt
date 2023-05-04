@@ -23,22 +23,23 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
+    private var _binding:FragmentRecipesBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var mainviewmodel : MainViewModel
-    private lateinit var mView:View
     private lateinit var receipesViewModel: RecipesViewModel
     private val mAdapter by lazy { ReceiptAdapter() }
-    private lateinit var Databinding : FragmentRecipesBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        Databinding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipes, container, false)
+        _binding = FragmentRecipesBinding.inflate(inflater,container,false)
+        binding.lifecycleOwner = this
+        binding.mainViewModel = mainviewmodel
 
         setRecyclerView()
-//        reqestApiData()
         readDatabase()
-        return Databinding!!.root
+        return binding.root
     }
 
     private fun readDatabase() {
@@ -60,8 +61,8 @@ class RecipesFragment : Fragment() {
     }
 
     private fun setRecyclerView(){
-        Databinding.recyclerview.adapter = mAdapter
-        Databinding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerview.adapter = mAdapter
+        binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun requestApiData(){
@@ -97,5 +98,10 @@ class RecipesFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
