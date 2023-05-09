@@ -1,6 +1,7 @@
 package com.example.foodrecipes.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodrecipes.viewmodel.MainViewModel
 import com.example.foodrecipes.R
@@ -23,6 +26,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
+    private val args by navArgs<RecipesFragmentArgs>()  //RecipesFragmentArgs是由navigation自動產生的
+
     private var _binding:FragmentRecipesBinding? = null
     private val binding get() = _binding!!
 
@@ -39,13 +44,16 @@ class RecipesFragment : Fragment() {
 
         setRecyclerView()
         readDatabase()
+        binding.recipesFab.setOnClickListener {
+            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+        }
         return binding.root
     }
 
     private fun readDatabase() {
         lifecycleScope.launch{
             mainviewmodel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
-                if (database.isNotEmpty()) {
+                if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     mAdapter.setData(database[0].foodReceipt)
                 }else{
                     requestApiData()
