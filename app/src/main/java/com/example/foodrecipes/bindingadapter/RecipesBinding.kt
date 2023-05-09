@@ -25,7 +25,7 @@ class RecipesBinding {
             }else if(apiResponse is NetworkResult.Loading){
                 imageView.visibility = View.INVISIBLE
             }else if(apiResponse is NetworkResult.Success){
-                imageView.visibility = View.VISIBLE
+                imageView.visibility = View.INVISIBLE
             }
         }
 
@@ -42,7 +42,7 @@ class RecipesBinding {
             }else if(apiResponse is NetworkResult.Loading){
                 textView.visibility = View.INVISIBLE
             }else if(apiResponse is NetworkResult.Success){
-                textView.visibility = View.VISIBLE
+                textView.visibility = View.INVISIBLE
             }
         }
 
