@@ -1,7 +1,9 @@
 package com.example.foodrecipes.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.foodrecipes.data.DataStoreRepository
 import com.example.foodrecipes.util.Constants
@@ -31,6 +33,9 @@ class RecipesViewModel @Inject constructor(
     private var dietType = DEFAULT_DIET_TYPE
 
     val realMealAndDietType = dataStoreRepository.realMealAndDietType
+    val readBackOnline = dataStoreRepository.realBackOnline.asLiveData()
+    var networkStatus = false
+    var backOnline = false
 
     fun saveMealAndDietType(
         mealType: String,
@@ -46,18 +51,20 @@ class RecipesViewModel @Inject constructor(
                 dietTypeId
             )
         }
-
     }
 
-    fun allyQuery(): HashMap<String, String> {
+    fun saveBackOnline(backonline:Boolean) =
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.saveBackOnline(backonline)
+        }
 
+    fun allyQuery(): HashMap<String, String> {
         viewModelScope.launch {
             realMealAndDietType.collect{
                 mealtype = it.selectedDietType
                 dietType = it.selectedDietType
             }
         }
-
         val query: HashMap<String, String> = HashMap()
         query[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         query[QUERY_API_KEY] = API_KEY
@@ -67,4 +74,17 @@ class RecipesViewModel @Inject constructor(
         query[QUERY_FILL_INGREDIENTS] = "true"
         return query
     }
+
+    fun showNetworkStatus(){
+        if(!networkStatus) {
+            Toast.makeText(getApplication(), "沒有網路", Toast.LENGTH_LONG).show()
+            saveBackOnline(true)
+        }else{
+            if(backOnline) {
+                Toast.makeText(getApplication(), "網路正常", Toast.LENGTH_LONG).show()
+                saveBackOnline(false)
+            }
+        }
+    }
+
 }

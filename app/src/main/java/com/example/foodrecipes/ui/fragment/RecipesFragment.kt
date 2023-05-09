@@ -18,6 +18,7 @@ import com.example.foodrecipes.R
 import com.example.foodrecipes.adapter.ReceiptAdapter
 import com.example.foodrecipes.databinding.FragmentRecipesBinding
 import com.example.foodrecipes.util.Constants.Companion.API_KEY
+import com.example.foodrecipes.util.NetworkListener
 import com.example.foodrecipes.util.NetworkResult
 import com.example.foodrecipes.util.observeOnce
 import com.example.foodrecipes.viewmodel.RecipesViewModel
@@ -34,6 +35,7 @@ class RecipesFragment : Fragment() {
     private lateinit var mainviewmodel : MainViewModel
     private lateinit var receipesViewModel: RecipesViewModel
     private val mAdapter by lazy { ReceiptAdapter() }
+    private lateinit var networkListener: NetworkListener
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,10 +45,26 @@ class RecipesFragment : Fragment() {
         binding.mainViewModel = mainviewmodel
 
         setRecyclerView()
-        readDatabase()
-        binding.recipesFab.setOnClickListener {
-            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+        receipesViewModel.readBackOnline.observe(viewLifecycleOwner){
+            receipesViewModel.backOnline = it
         }
+        binding.recipesFab.setOnClickListener {
+            if(receipesViewModel.networkStatus)
+                findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            else
+                receipesViewModel.showNetworkStatus()
+        }
+        lifecycleScope.launch{
+            networkListener = NetworkListener()
+            networkListener.checkNetworkAvailable(requireContext())     //只要網路變化就會讀取資料庫
+                .collect{
+                    Log.e("網路變化",it.toString())
+                    receipesViewModel.networkStatus = it
+                    receipesViewModel.showNetworkStatus()
+                    readDatabase()
+                }
+        }
+
         return binding.root
     }
 

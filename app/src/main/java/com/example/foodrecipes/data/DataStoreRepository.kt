@@ -5,6 +5,7 @@ import androidx.datastore.DataStore
 import androidx.datastore.preferences.*
 import com.example.foodrecipes.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.example.foodrecipes.util.Constants.Companion.DEFAULT_MEAL_TYPE
+import com.example.foodrecipes.util.Constants.Companion.PREFERENCES_BACK_ONLINE
 import com.example.foodrecipes.util.Constants.Companion.PREFERENCES_DIET_TYPE
 import com.example.foodrecipes.util.Constants.Companion.PREFERENCES_DIET_TYPE_ID
 import com.example.foodrecipes.util.Constants.Companion.PREFERENCES_MEAL_TYPE
@@ -33,6 +34,7 @@ class DataStoreRepository @Inject constructor(
         val selectMealTypeId = preferencesKey<Int>(PREFERENCES_MEAL_TYPE_ID)
         val selectDietType = preferencesKey<String>(PREFERENCES_DIET_TYPE)
         val selectDietTypeId = preferencesKey<Int>(PREFERENCES_DIET_TYPE_ID)
+        val backOnline = preferencesKey<Boolean>(PREFERENCES_BACK_ONLINE)
     }
 
     private val dataStore: DataStore<Preferences> = context.createDataStore(
@@ -54,6 +56,12 @@ class DataStoreRepository @Inject constructor(
         }
     }
 
+    suspend fun saveBackOnline(backonline:Boolean){
+        dataStore.edit {
+            it[PreferenceKey.backOnline] = backonline
+        }
+    }
+
     val realMealAndDietType : Flow<MealAndDietType> = dataStore.data
         .catch { exception ->
             if(exception is IOException)
@@ -71,6 +79,16 @@ class DataStoreRepository @Inject constructor(
                 selectedDietType,
                 selectedDietTypeId
             )
+        }
+    val realBackOnline : Flow<Boolean> = dataStore.data
+        .catch { exception ->
+            if(exception is IOException)
+                emit(emptyPreferences())
+            else
+                throw exception
+        }.map {
+            val backonline = it[PreferenceKey.backOnline] ?: false
+            backonline
         }
 }
 
