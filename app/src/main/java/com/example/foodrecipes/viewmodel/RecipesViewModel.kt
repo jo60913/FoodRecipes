@@ -16,6 +16,7 @@ import com.example.foodrecipes.util.Constants.Companion.QUERY_API_KEY
 import com.example.foodrecipes.util.Constants.Companion.QUERY_DIET
 import com.example.foodrecipes.util.Constants.Companion.QUERY_FILL_INGREDIENTS
 import com.example.foodrecipes.util.Constants.Companion.QUERY_NUMBER
+import com.example.foodrecipes.util.Constants.Companion.QUERY_SEARCH
 import com.example.foodrecipes.util.Constants.Companion.QUERY_TYPE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -73,6 +74,16 @@ class RecipesViewModel @Inject constructor(
         query[QUERY_ADD_RECIPE_INFORMATION] = "true"
         query[QUERY_FILL_INGREDIENTS] = "true"
         return query
+    }
+
+    fun applySearchQuery(searchQuery:String) : HashMap<String,String>{
+        val queries:HashMap<String,String> = HashMap<String,String>()
+        queries[QUERY_SEARCH] = searchQuery
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
+        queries[QUERY_API_KEY] = API_KEY
+        queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
+        queries[QUERY_FILL_INGREDIENTS] = "true"
+        return queries
     }
 
     fun showNetworkStatus(){

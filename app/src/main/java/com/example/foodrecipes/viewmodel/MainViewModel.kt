@@ -31,10 +31,28 @@ class MainViewModel @Inject constructor(
 
     /** Retrofit */
     var recipesResponse : MutableLiveData<NetworkResult<FoodReceipt>> = MutableLiveData()
-
+    var searchRecipesResponse : MutableLiveData<NetworkResult<FoodReceipt>> = MutableLiveData()
 
     fun getRecipes(queries : Map<String,String>) = viewModelScope.launch {
         getReceipesSafeCall(queries)
+    }
+
+    fun searchRecipes(searchQuery:Map<String,String>) = viewModelScope.launch {
+        searchRecipesSafeCall(searchQuery)
+    }
+
+    private suspend fun searchRecipesSafeCall(searchQuery: Map<String, String>) {
+        searchRecipesResponse.value = NetworkResult.Loading()
+        if(hasInternetConnection()){
+            try {
+                val response = repository.remote.searchRecipes(searchQuery)
+                searchRecipesResponse.value = handleFoodRecipesresponse(response)
+            }catch (e:java.lang.Exception){
+                searchRecipesResponse.value = NetworkResult.Error("找不到食譜")
+            }
+        }else{
+            searchRecipesResponse.value = NetworkResult.Error("沒有網路")
+        }
     }
 
     private suspend fun getReceipesSafeCall(queries: Map<String, String>) {

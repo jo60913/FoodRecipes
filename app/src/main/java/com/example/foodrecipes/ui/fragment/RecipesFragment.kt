@@ -3,10 +3,9 @@ package com.example.foodrecipes.ui.fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,7 +15,6 @@ import com.example.foodrecipes.viewmodel.MainViewModel
 import com.example.foodrecipes.R
 import com.example.foodrecipes.adapter.ReceiptAdapter
 import com.example.foodrecipes.databinding.FragmentRecipesBinding
-import com.example.foodrecipes.util.Constants.Companion.API_KEY
 import com.example.foodrecipes.util.NetworkListener
 import com.example.foodrecipes.util.NetworkResult
 import com.example.foodrecipes.util.observeOnce
@@ -94,6 +92,8 @@ class RecipesFragment : Fragment() {
         searchView?.isSubmitButtonEnabled = true
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query != null)
+                    searchApiData(query)
                 return true
             }
 
@@ -107,6 +107,25 @@ class RecipesFragment : Fragment() {
     private fun setRecyclerView(){
         binding.recyclerview.adapter = mAdapter
         binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun searchApiData(searchQuery:String){
+        mainviewmodel.searchRecipes(receipesViewModel.applySearchQuery(searchQuery))
+        mainviewmodel.searchRecipesResponse.observe(viewLifecycleOwner){ response ->
+            when(response){
+                is NetworkResult.Success ->{
+                    val foodReceipt = response.data
+                    foodReceipt?.let { it -> mAdapter.setData(it) }
+                }
+                is NetworkResult.Error ->{
+                    loadDataFromCache()
+                    Toast.makeText(requireContext(),response.message.toString(),Toast.LENGTH_LONG).show()
+                }
+                is NetworkResult.Loading ->{
+
+                }
+            }
+        }
     }
 
     private fun requestApiData(){

@@ -10,4 +10,9 @@ interface FoodReceiptApi{
     suspend fun getFoodReceipt(
         @QueryMap queries:Map<String,String>
     ):Response<FoodReceipt>
+
+    @GET("/recipes/complexSearch")
+    suspend fun searchRecipes(
+        @QueryMap searchQuery:Map<String,String>
+    ):Response<FoodReceipt>
 }
