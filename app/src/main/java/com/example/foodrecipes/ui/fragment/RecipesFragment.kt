@@ -2,10 +2,9 @@ package com.example.foodrecipes.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -39,7 +38,7 @@ class RecipesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRecipesBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
         binding.mainViewModel = mainviewmodel
@@ -48,6 +47,7 @@ class RecipesFragment : Fragment() {
         receipesViewModel.readBackOnline.observe(viewLifecycleOwner){
             receipesViewModel.backOnline = it
         }
+        setHasOptionsMenu(true)
         binding.recipesFab.setOnClickListener {
             if(receipesViewModel.networkStatus)
                 findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
@@ -84,6 +84,24 @@ class RecipesFragment : Fragment() {
         super.onCreate(savedInstanceState)
         mainviewmodel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
         receipesViewModel = ViewModelProvider(requireActivity()).get(RecipesViewModel::class.java)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.recipes_menu,menu)
+
+        val search = menu.findItem(R.id.search)
+        val searchView = search.actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+
+        })
     }
 
     private fun setRecyclerView(){
