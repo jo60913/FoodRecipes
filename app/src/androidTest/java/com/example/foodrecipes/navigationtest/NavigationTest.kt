@@ -17,7 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import com.example.foodrecipes.R
-import com.example.foodrecipes.ui.fragment.RecipesFragment
+import com.example.foodrecipes.ui.fragment.main.RecipesFragment
 import org.junit.Before
 
 @MediumTest

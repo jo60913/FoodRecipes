@@ -29,5 +29,9 @@ class Constants {
         const val PREFERENCES_DIET_TYPE = "dietType"
         const val PREFERENCES_DIET_TYPE_ID = "dietTypeId"
         const val PREFERENCES_BACK_ONLINE = "backonline"
+
+        const val OVERVIEW = "介紹"
+        const val INGREDIENTS = "材料"
+        const val INSTRUCTIONS = "作法"
     }
 }

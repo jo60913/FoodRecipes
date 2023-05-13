@@ -1,8 +1,12 @@
 package com.example.foodrecipes.module
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
+@Parcelize
 data class Result(
     @SerializedName("aggregateLikes")
     val aggregateLikes: Int,
@@ -11,7 +15,7 @@ data class Result(
     @SerializedName("dairyFree")
     val dairyFree: Boolean,
     @SerializedName("extendedIngredients")
-    val extendedIngredients: List<ExtendedIngredient>,
+    val extendedIngredients: @RawValue List<ExtendedIngredient>?,
     @SerializedName("glutenFree")
     val glutenFree: Boolean,
     @SerializedName("id")
@@ -19,15 +23,15 @@ data class Result(
     @SerializedName("image")
     val image: String,
     @SerializedName("license")
-    val license: String,
+    val license: String?,
     @SerializedName("readyInMinutes")
     val readyInMinutes: Int,
     @SerializedName("sourceName")
-    val sourceName: String,
+    val sourceName: String?,
     @SerializedName("sourceUrl")
-    val sourceUrl: String,
+    val sourceUrl: String?,
     @SerializedName("summary")
-    val summary: String,
+    val summary: String?,
     @SerializedName("title")
     val title: String,
     @SerializedName("vegan")
@@ -36,4 +40,4 @@ data class Result(
     val vegetarian: Boolean,
     @SerializedName("veryHealthy")
     val veryHealthy: Boolean,
-)
+):Parcelable

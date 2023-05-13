@@ -1,4 +1,4 @@
-package com.example.foodrecipes.ui.fragment
+package com.example.foodrecipes.ui.fragment.main
 
 import android.os.Bundle
 import android.util.Log
@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 class RecipesFragment : Fragment() {
     private val args by navArgs<RecipesFragmentArgs>()  //RecipesFragmentArgs是由navigation自動產生的
 
-    private var _binding:FragmentRecipesBinding? = null
+    private var _binding: FragmentRecipesBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var mainviewmodel : MainViewModel
