@@ -16,6 +16,7 @@ import com.example.foodrecipes.ui.fragment.detail.OverviewFragment
 import com.example.foodrecipes.util.Constants.Companion.INGREDIENTS
 import com.example.foodrecipes.util.Constants.Companion.INSTRUCTIONS
 import com.example.foodrecipes.util.Constants.Companion.OVERVIEW
+import com.example.foodrecipes.util.Constants.Companion.RECIPES_BUNDLE_KEY
 
 class DetailActivity : AppCompatActivity() {
     private val args by navArgs<DetailActivityArgs>()
@@ -41,7 +42,7 @@ class DetailActivity : AppCompatActivity() {
         titles.add(INSTRUCTIONS)
 
         val resultBundle = Bundle()
-        resultBundle.putParcelable("recipesBundle",args.result)
+        resultBundle.putParcelable(RECIPES_BUNDLE_KEY,args.result)
 
         val adapter = PageAdapter(
             resultBundle,
