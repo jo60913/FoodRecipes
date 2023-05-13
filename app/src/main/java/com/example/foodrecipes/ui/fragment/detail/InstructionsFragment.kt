@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.foodrecipes.R
+import android.webkit.WebViewClient
+import com.example.foodrecipes.databinding.FragmentInstructionsBinding
+import com.example.foodrecipes.module.Result
+import com.example.foodrecipes.util.Constants
 
 
 class InstructionsFragment : Fragment() {
@@ -13,8 +16,20 @@ class InstructionsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_instructions, container, false)
+        val binding = FragmentInstructionsBinding.inflate(inflater,container,false)
+        val args = arguments
+        val myBundle : Result? = args?.getParcelable<Result>(Constants.RECIPES_BUNDLE_KEY)
+
+        binding.webview.webViewClient = object : WebViewClient() {}
+        val website:String = if(myBundle!!.sourceUrl != null){
+            myBundle!!.sourceUrl!!
+        }else{
+            ""
+        }
+
+        binding.webview.loadUrl(website)
+
+        return binding.root
     }
 
 }
