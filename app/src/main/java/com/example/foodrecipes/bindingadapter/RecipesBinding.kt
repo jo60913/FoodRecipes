@@ -7,8 +7,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
-import com.example.foodrecipes.data.database.ReceipesEntity
-import com.example.foodrecipes.data.database.RecipeDatabase
+import com.example.foodrecipes.data.database.entity.ReceipesEntity
 import com.example.foodrecipes.module.FoodReceipt
 import com.example.foodrecipes.ui.fragment.main.RecipesFragmentDirections
 

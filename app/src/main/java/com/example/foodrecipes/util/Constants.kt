@@ -17,7 +17,7 @@ class Constants {
         //Room
         const val DATABASE_NAME = "recipes_database"
         const val RECIPES_TABLE = "recipes_table"
-
+        const val FAVORITES_RECEIPE_TABLE = "favorite_recipes_table"
         //Button Sheet
         const val DEFAULT_RECIPES_NUMBER = "50"
         const val DEFAULT_MEAL_TYPE = "main course"
