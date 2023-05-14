@@ -2,6 +2,7 @@ package com.example.foodrecipes.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -52,6 +53,11 @@ class DetailActivity : AppCompatActivity() {
         )
         binding.viewpager.adapter = adapter
         binding.tableLayout.setupWithViewPager(binding.viewpager)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.detail_menu,menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
