@@ -31,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
     private val mainviewmodel:MainViewModel by viewModels()
     private lateinit var binding:ActivityDetailBinding
 
-    private var recipeSave = true
+    private var recipeSave = false
     private var saveRecipeId = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
