@@ -37,4 +37,5 @@
     <color name="statusBarColor">@color/colorPrimaryDark</color>
     <color name="contextStatusBarColor">@color/darker</color>
     <color name="contextualActionBarColor">@color/dark</color>
+    <color name="cardBackgroundLightColor">#106200EA</color>
 </resources>
