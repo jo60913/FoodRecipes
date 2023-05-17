@@ -43,4 +43,5 @@
     <string name="save_to_favorites">我的最愛</string>
     <string name="no_favorite_recipes">沒有任何我的最愛</string>
     <string name="delete_favorite_menu">刪除我的最愛</string>
+    <string name="delete_all">全部移除</string>
 </resources>
