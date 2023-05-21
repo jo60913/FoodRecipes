@@ -1,7 +1,5 @@
 package com.example.foodrecipes.util
 import androidx.recyclerview.widget.DiffUtil
-import com.example.foodrecipes.module.Result
-import kotlin.math.sign
 
 class RecipesDiffUtil<T>(
     private val oldList : List<T>,

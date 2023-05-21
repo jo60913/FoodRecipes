@@ -34,5 +34,6 @@ class Constants {
         const val INGREDIENTS = "材料"
         const val INSTRUCTIONS = "作法"
         const val RECIPES_BUNDLE_KEY = "recipesBundle"
+        const val FOOD_JOKE_TABLE = "food_joke_table"
     }
 }

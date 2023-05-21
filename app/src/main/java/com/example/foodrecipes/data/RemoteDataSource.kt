@@ -1,5 +1,6 @@
 package com.example.foodrecipes.data
 
+import com.example.foodrecipes.module.FoodJoke
 import com.example.foodrecipes.module.FoodReceipt
 import com.example.foodrecipes.network.FoodReceiptApi
 import retrofit2.Response
@@ -14,5 +15,9 @@ class RemoteDataSource@Inject constructor(
 
     suspend fun searchRecipes(searchQuery:Map<String,String>):Response<FoodReceipt>{
         return foodReceiptApi.searchRecipes(searchQuery)
+    }
+
+    suspend fun getFoodJoke(apiKey:String):Response<FoodJoke>{
+        return foodReceiptApi.getFoodJoke(apiKey)
     }
 }

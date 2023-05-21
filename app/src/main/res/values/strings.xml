@@ -44,4 +44,5 @@
     <string name="no_favorite_recipes">沒有任何我的最愛</string>
     <string name="delete_favorite_menu">刪除我的最愛</string>
     <string name="delete_all">全部移除</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </string>
 </resources>
