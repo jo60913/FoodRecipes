@@ -32,8 +32,7 @@ object DatabaseModule {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL("CREATE TABLE IF NOT EXISTS ${FOOD_JOKE_TABLE} (`id` INTEGER PRIMARY KEY NOT NULL, `text` TEXT NOT NULL)")
         }
-    })
-        .build()
+    }).build()
 
     @Singleton
     @Provides
