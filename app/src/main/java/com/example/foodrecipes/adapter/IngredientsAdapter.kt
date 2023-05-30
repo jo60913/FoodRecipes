@@ -31,7 +31,7 @@ class IngredientsAdapter : RecyclerView.Adapter<IngredientsAdapter.MyViewHolder>
         val ingredientOriginal = holder.itemView.findViewById<TextView>(R.id.ingredient_original)
 
         val item = ingredientList[position]
-        ingredientImageview.load(BASE_IMAGE_URL){
+        ingredientImageview.load(BASE_IMAGE_URL + item.image){
             crossfade(600)
             error(R.drawable.ic_error_placeholder)
         }
