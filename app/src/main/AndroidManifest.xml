@@ -21,7 +21,7 @@
             android:name=".ui.DetailActivity"
             android:exported="false"
             android:label="內容"
-            android:theme="@style/DetailsActivityStyle">
+            android:theme="@style/Theme.FoodRecipes.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
