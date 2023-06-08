@@ -35,5 +35,9 @@ class Constants {
         const val INSTRUCTIONS = "作法"
         const val RECIPES_BUNDLE_KEY = "recipesBundle"
         const val FOOD_JOKE_TABLE = "food_joke_table"
+
+        //firebase
+        const val FIREBASE_NOTIFICATION_CHANNEL_ID = "1"
+        const val FIREBASE_NOTIFICATION_ID = 1
     }
 }
