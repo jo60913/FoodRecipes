@@ -1,6 +1,5 @@
 package com.example.foodrecipes.bindingadapter
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +11,7 @@ import com.example.foodrecipes.module.FoodReceipt
 import com.example.foodrecipes.ui.fragment.main.RecipesFragmentDirections
 
 import com.example.foodrecipes.util.NetworkResult
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 class RecipesBinding {
     companion object {
@@ -28,7 +28,7 @@ class RecipesBinding {
                     constraintLayout.findNavController().navigate(action)
                 }
             }catch (e:java.lang.Exception){
-                Log.e("錯誤","點下食譜時錯誤")
+                FirebaseCrashlytics.getInstance().recordException(e)
             }
         }
 

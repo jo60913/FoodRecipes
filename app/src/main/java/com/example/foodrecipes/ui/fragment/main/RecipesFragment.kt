@@ -15,10 +15,13 @@ import com.example.foodrecipes.viewmodel.MainViewModel
 import com.example.foodrecipes.R
 import com.example.foodrecipes.adapter.ReceiptAdapter
 import com.example.foodrecipes.databinding.FragmentRecipesBinding
+import com.example.foodrecipes.util.Constants.Companion.SEARCH_KEYWORD_FROM_DATABASE
+import com.example.foodrecipes.util.Constants.Companion.SEARCH_RECIPE_FROM_SEARCHBAR
 import com.example.foodrecipes.util.NetworkListener
 import com.example.foodrecipes.util.NetworkResult
 import com.example.foodrecipes.util.observeOnce
 import com.example.foodrecipes.viewmodel.RecipesViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -66,6 +69,7 @@ class RecipesFragment : Fragment() {
         return binding.root
     }
 
+
     private fun readDatabase() {
         lifecycleScope.launch{
             mainviewmodel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
@@ -92,8 +96,11 @@ class RecipesFragment : Fragment() {
         searchView?.isSubmitButtonEnabled = true
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(query != null)
+                if(query != null) {
                     searchApiData(query)
+                    setSearchDataToFirebase(query)
+                }
+
                 return true
             }
 
@@ -107,6 +114,12 @@ class RecipesFragment : Fragment() {
     private fun setRecyclerView(){
         binding.recyclerview.adapter = mAdapter
         binding.recyclerview.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun setSearchDataToFirebase(query:String){
+        val firebaseData = Bundle()
+        firebaseData.putString(SEARCH_KEYWORD_FROM_DATABASE,query)
+        FirebaseAnalytics.getInstance(requireContext()).logEvent(SEARCH_RECIPE_FROM_SEARCHBAR,firebaseData)
     }
 
     private fun searchApiData(searchQuery:String){

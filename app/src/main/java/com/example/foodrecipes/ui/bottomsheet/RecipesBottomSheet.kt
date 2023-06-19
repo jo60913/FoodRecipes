@@ -11,10 +11,14 @@ import androidx.navigation.fragment.findNavController
 import com.example.foodrecipes.databinding.RecipesBottomSheetBinding
 import com.example.foodrecipes.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.example.foodrecipes.util.Constants.Companion.DEFAULT_MEAL_TYPE
+import com.example.foodrecipes.util.Constants.Companion.DIET_TYEP
+import com.example.foodrecipes.util.Constants.Companion.FILTER_RECIPE
+import com.example.foodrecipes.util.Constants.Companion.MEAL_TYPE
 import com.example.foodrecipes.viewmodel.RecipesViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.firebase.analytics.FirebaseAnalytics
 import java.util.*
 
 
@@ -68,6 +72,10 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
                 dietTypeChip,
                 dietTypeChipId
             )
+            val filterbundle = Bundle()
+            filterbundle.putString(MEAL_TYPE,mealTypeChip)
+            filterbundle.putString(DIET_TYEP,dietTypeChip)
+            FirebaseAnalytics.getInstance(requireContext()).logEvent(FILTER_RECIPE,filterbundle)
             val action = RecipesBottomSheetDirections.actionRecipesBottomSheetToRecipesFragment(true)    //執行在navigation的action這個action可以在navigation的xml中找到。RecipesBottomSheetDirections是navigation自動產生的
             findNavController().navigate(action)
         }

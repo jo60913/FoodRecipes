@@ -1,6 +1,5 @@
 package com.example.foodrecipes.ui
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -12,7 +11,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.foodrecipes.R
 import com.example.foodrecipes.databinding.ActivityMainBinding
-import com.example.foodrecipes.firebase.MyFirebaseMessageServer
+import com.example.foodrecipes.util.Constants.Companion.LOGIN
+import com.example.foodrecipes.util.Constants.Companion.LOGIN_ACCOUNT
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
             if(it.isSuccessful)
                 Toast.makeText(this,"成功",Toast.LENGTH_SHORT).show()
         }
+        val param = Bundle()
+        param.putString(LOGIN_ACCOUNT,"jo60913")
+        FirebaseAnalytics.getInstance(this).logEvent(LOGIN,param)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.recipesFragment,

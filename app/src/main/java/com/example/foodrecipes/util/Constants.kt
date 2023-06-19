@@ -39,5 +39,13 @@ class Constants {
         //firebase
         const val FIREBASE_NOTIFICATION_CHANNEL_ID = "1"
         const val FIREBASE_NOTIFICATION_ID = 1
+        const val LOGIN = "Login"
+        const val LOGIN_ACCOUNT = "LoginAccount"
+        const val CLICK_RECIPE = "ClickRecipe"
+        const val SEARCH_RECIPE_FROM_SEARCHBAR = "SearchRecipeFromSearchBar"
+        const val SEARCH_KEYWORD_FROM_DATABASE = "SearchKeyWordFromDatabase"
+        const val FILTER_RECIPE = "FilterRecipe"
+        const val MEAL_TYPE = "MealType"
+        const val DIET_TYEP = "DietType"
     }
 }

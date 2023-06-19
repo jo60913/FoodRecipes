@@ -10,7 +10,9 @@ import coil.load
 import com.example.foodrecipes.R
 import com.example.foodrecipes.databinding.FragmentOverviewBinding
 import com.example.foodrecipes.module.Result
+import com.example.foodrecipes.util.Constants.Companion.CLICK_RECIPE
 import com.example.foodrecipes.util.Constants.Companion.RECIPES_BUNDLE_KEY
+import com.google.firebase.analytics.FirebaseAnalytics
 import org.jsoup.Jsoup
 
 
@@ -60,7 +62,9 @@ class OverviewFragment : Fragment() {
             view.cheapImageView.setColorFilter(ContextCompat.getColor(requireContext(), R.color.green))
             view.cheapTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
         }
-
+        val databundle = Bundle()
+        databundle.putString("ClickRecipe",myBundle?.title)
+        FirebaseAnalytics.getInstance(requireContext()).logEvent(CLICK_RECIPE,databundle)
 
         return view.root
     }
