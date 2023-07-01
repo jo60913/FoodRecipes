@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.SplashScreenStyle)
         databinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         navController = findNavController(R.id.navHostFragment)
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)

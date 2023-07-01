@@ -15,6 +15,10 @@
         <item name="actionModeBackground">@color/contextualActionBarColor</item>
     </style>
 
+    <style name="SplashScreenStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/foodrecipt_splashscreen</item>
+    </style>
+
     <style name="Theme.FoodRecipes.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

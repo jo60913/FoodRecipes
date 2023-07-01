@@ -121,7 +121,6 @@ dependencies {
 
     testImplementation "org.mockito:mockito-core:3.8.0"
     androidTestImplementation 'org.mockito:mockito-android:3.8.0'
-    androidTestImplementation 'androidx.fragment:fragment-testing:1.4.0'
 
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
