@@ -1,13 +1,54 @@
 package com.example.foodrecipes.data
 
+import com.example.foodrecipes.data.database.RecipesDao
+import com.example.foodrecipes.data.database.entity.FavoritesEntity
+import com.example.foodrecipes.data.database.entity.FoodJokeEntity
+import com.example.foodrecipes.data.database.entity.ReceipesEntity
+import com.example.foodrecipes.module.FoodJoke
+import com.example.foodrecipes.module.FoodReceipt
+import com.example.foodrecipes.network.FoodReceiptApi
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import kotlinx.coroutines.flow.Flow
+import retrofit2.Response
 import javax.inject.Inject
 
 @ActivityRetainedScoped
 class Repository @Inject constructor(
-    remoteDataSource: RemoteDataSource,
-    localDataSource: LocalDataSource
-){
-    val remote = remoteDataSource
-    val local = localDataSource
+    private val foodReceiptApi: FoodReceiptApi,
+    private val recipesDao: RecipesDao
+) {
+    suspend fun getRecipes(queries: Map<String, String>): Response<FoodReceipt> {
+        return foodReceiptApi.getFoodReceipt(queries)
+    }
+
+    suspend fun searchRecipes(searchQuery: Map<String, String>): Response<FoodReceipt> {
+        return foodReceiptApi.searchRecipes(searchQuery)
+    }
+
+    suspend fun getFoodJoke(apiKey: String): Response<FoodJoke> {
+        return foodReceiptApi.getFoodJoke(apiKey)
+    }
+
+    suspend fun insertRecipes(recipesEntity: ReceipesEntity) {
+        recipesDao.insertRecipes(recipesEntity)
+    }
+
+    fun readRecipes() = recipesDao.readRecipes()
+
+    fun readFacoriteRecipes(): Flow<List<FavoritesEntity>> = recipesDao.readFavoriteRecipes()
+
+    suspend fun insertFacoriteRecipes(favoritesEntity: FavoritesEntity) =
+        recipesDao.insertFavoriteRecipes(favoritesEntity)
+
+    suspend fun deleteFavoriteRecipe(favoritesEntity: FavoritesEntity) =
+        recipesDao.deleteFavoriteRecipes(favoritesEntity)
+
+    suspend fun deleteAllFavoriteRecipes() = recipesDao.deleteAllFavoriteRecipes()
+
+    suspend fun insertFoodJoke(foodJokeEntity: FoodJokeEntity) =
+        recipesDao.insertFoodJoke(foodJokeEntity)
+    
+
+    fun readFoodJoke(): Flow<List<FoodJokeEntity>> =
+        recipesDao.readFoodjoke()
 }

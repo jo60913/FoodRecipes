@@ -25,12 +25,12 @@ class MainViewModel @Inject constructor(
 ):AndroidViewModel(application) {
 
     /** Room Database */
-    val readRecipes:LiveData<List<ReceipesEntity>> = repository.local.readRecipes().asLiveData()
-    val readFavoriteRecipes:LiveData<List<FavoritesEntity>> = repository.local.readFacoriteRecipes().asLiveData()
-    val readFoodJoke:LiveData<List<FoodJokeEntity>> = repository.local.readFoodJoke().asLiveData()
+    val readRecipes:LiveData<List<ReceipesEntity>> = repository.readRecipes().asLiveData()
+    val readFavoriteRecipes:LiveData<List<FavoritesEntity>> = repository.readFacoriteRecipes().asLiveData()
+    val readFoodJoke:LiveData<List<FoodJokeEntity>> = repository.readFoodJoke().asLiveData()
     private fun insertRecipes(receipesEntity: ReceipesEntity) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.local.insertRecipes(receipesEntity)
+            repository.insertRecipes(receipesEntity)
         }
 
     /** Retrofit */
@@ -53,7 +53,7 @@ class MainViewModel @Inject constructor(
         foodjokeResponse.value = NetworkResult.Loading()
         if(hasInternetConnection()){
             try {
-                val response = repository.remote.getFoodJoke(apikey)
+                val response = repository.getFoodJoke(apikey)
                 foodjokeResponse.value = handleFoodJokeResponse(response)
 
                 val foodjoke = foodjokeResponse.value!!.data
@@ -71,7 +71,7 @@ class MainViewModel @Inject constructor(
         searchRecipesResponse.value = NetworkResult.Loading()
         if(hasInternetConnection()){
             try {
-                val response = repository.remote.searchRecipes(searchQuery)
+                val response = repository.searchRecipes(searchQuery)
                 searchRecipesResponse.value = handleFoodRecipesresponse(response)
             }catch (e:java.lang.Exception){
                 searchRecipesResponse.value = NetworkResult.Error("找不到食譜")
@@ -85,7 +85,7 @@ class MainViewModel @Inject constructor(
         recipesResponse.value = NetworkResult.Loading()
         if(hasInternetConnection()){
             try {
-                val response = repository.remote.getRecipes(queries)
+                val response = repository.getRecipes(queries)
                 recipesResponse.value = handleFoodRecipesresponse(response)
 
                 val foodReceipt = recipesResponse.value!!.data
@@ -168,21 +168,21 @@ class MainViewModel @Inject constructor(
 
     fun insertFacoriteRecipes(favoritesEntity: FavoritesEntity) =
         viewModelScope.launch (Dispatchers.IO) {
-            repository.local.insertFacoriteRecipes(favoritesEntity)
+            repository.insertFacoriteRecipes(favoritesEntity)
         }
 
     fun insertFoodJoke(foodJokeEntity:FoodJokeEntity) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.local.insertFoodJoke(foodJokeEntity)
+            repository.insertFoodJoke(foodJokeEntity)
         }
 
     fun deleteFacoriteRecipes(favoritesEntity: FavoritesEntity) =
         viewModelScope.launch (Dispatchers.IO) {
-            repository.local.deleteFavoriteRecipe(favoritesEntity)
+            repository.deleteFavoriteRecipe(favoritesEntity)
         }
 
     fun deleteAllFacoriteRecipes() =
         viewModelScope.launch (Dispatchers.IO) {
-            repository.local.deleteAllFavoriteRecipes()
+            repository.deleteAllFavoriteRecipes()
         }
 }
