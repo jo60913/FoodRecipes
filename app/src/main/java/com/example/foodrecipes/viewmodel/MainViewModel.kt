@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.lifecycle.*
-import com.example.foodrecipes.data.Repository
+import com.example.foodrecipes.data.IRepository
 import com.example.foodrecipes.data.database.entity.FavoritesEntity
 import com.example.foodrecipes.data.database.entity.FoodJokeEntity
 import com.example.foodrecipes.data.database.entity.ReceipesEntity
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: Repository,
+    private val repository: IRepository,
     application: Application
 ):AndroidViewModel(application) {
 

@@ -7,12 +7,12 @@ import com.example.foodrecipes.data.database.entity.ReceipesEntity
 import com.example.foodrecipes.module.FoodJoke
 import com.example.foodrecipes.module.FoodReceipt
 import com.example.foodrecipes.network.FoodReceiptApi
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ActivityRetainedScoped
+@Singleton
 class Repository @Inject constructor(
     private val foodReceiptApi: FoodReceiptApi,
     private val recipesDao: RecipesDao
