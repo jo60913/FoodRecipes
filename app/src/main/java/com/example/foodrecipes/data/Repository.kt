@@ -16,39 +16,39 @@ import javax.inject.Inject
 class Repository @Inject constructor(
     private val foodReceiptApi: FoodReceiptApi,
     private val recipesDao: RecipesDao
-) {
-    suspend fun getRecipes(queries: Map<String, String>): Response<FoodReceipt> {
+) : IRepository {
+    override suspend fun getRecipes(queries: Map<String, String>): Response<FoodReceipt> {
         return foodReceiptApi.getFoodReceipt(queries)
     }
 
-    suspend fun searchRecipes(searchQuery: Map<String, String>): Response<FoodReceipt> {
+    override suspend fun searchRecipes(searchQuery: Map<String, String>): Response<FoodReceipt> {
         return foodReceiptApi.searchRecipes(searchQuery)
     }
 
-    suspend fun getFoodJoke(apiKey: String): Response<FoodJoke> {
+    override suspend fun getFoodJoke(apiKey: String): Response<FoodJoke> {
         return foodReceiptApi.getFoodJoke(apiKey)
     }
 
-    suspend fun insertRecipes(recipesEntity: ReceipesEntity) {
+    override suspend fun insertRecipes(recipesEntity: ReceipesEntity) {
         recipesDao.insertRecipes(recipesEntity)
     }
 
-    fun readRecipes() = recipesDao.readRecipes()
+    override fun readRecipes() = recipesDao.readRecipes()
 
-    fun readFacoriteRecipes(): Flow<List<FavoritesEntity>> = recipesDao.readFavoriteRecipes()
+    override fun readFavoriteRecipes(): Flow<List<FavoritesEntity>> = recipesDao.readFavoriteRecipes()
 
-    suspend fun insertFacoriteRecipes(favoritesEntity: FavoritesEntity) =
+    override suspend fun insertFavoriteRecipes(favoritesEntity: FavoritesEntity) =
         recipesDao.insertFavoriteRecipes(favoritesEntity)
 
-    suspend fun deleteFavoriteRecipe(favoritesEntity: FavoritesEntity) =
+    override suspend fun deleteFavoriteRecipe(favoritesEntity: FavoritesEntity) =
         recipesDao.deleteFavoriteRecipes(favoritesEntity)
 
-    suspend fun deleteAllFavoriteRecipes() = recipesDao.deleteAllFavoriteRecipes()
+    override suspend fun deleteAllFavoriteRecipes() = recipesDao.deleteAllFavoriteRecipes()
 
-    suspend fun insertFoodJoke(foodJokeEntity: FoodJokeEntity) =
+    override suspend fun insertFoodJoke(foodJokeEntity: FoodJokeEntity) =
         recipesDao.insertFoodJoke(foodJokeEntity)
-    
 
-    fun readFoodJoke(): Flow<List<FoodJokeEntity>> =
+
+    override fun readFoodJoke(): Flow<List<FoodJokeEntity>> =
         recipesDao.readFoodjoke()
 }

@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
 
     /** Room Database */
     val readRecipes:LiveData<List<ReceipesEntity>> = repository.readRecipes().asLiveData()
-    val readFavoriteRecipes:LiveData<List<FavoritesEntity>> = repository.readFacoriteRecipes().asLiveData()
+    val readFavoriteRecipes:LiveData<List<FavoritesEntity>> = repository.readFavoriteRecipes().asLiveData()
     val readFoodJoke:LiveData<List<FoodJokeEntity>> = repository.readFoodJoke().asLiveData()
     private fun insertRecipes(receipesEntity: ReceipesEntity) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -168,7 +168,7 @@ class MainViewModel @Inject constructor(
 
     fun insertFacoriteRecipes(favoritesEntity: FavoritesEntity) =
         viewModelScope.launch (Dispatchers.IO) {
-            repository.insertFacoriteRecipes(favoritesEntity)
+            repository.insertFavoriteRecipes(favoritesEntity)
         }
 
     fun insertFoodJoke(foodJokeEntity:FoodJokeEntity) =
