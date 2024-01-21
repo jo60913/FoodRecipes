@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.foodrecipes.R
 import com.example.foodrecipes.presentation.adapter.FavoriteRecipesAdapter
 import com.example.foodrecipes.databinding.FragmentFavoriteRecipesBinding
-import com.example.foodrecipes.databinding.FragmentRecipesBinding
 import com.example.foodrecipes.presentation.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +39,7 @@ class FavoriteRecipesFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.favorite_delete_all) {
-            mainViewModel.deleteAllFacoriteRecipes()
+            mainViewModel.deleteAllFavoriteRecipes()
             showSnackBar("已全部移除")
         }
         return super.onOptionsItemSelected(item)

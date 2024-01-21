@@ -27,6 +27,7 @@ class MainViewModel @Inject constructor(
     private val receiptInsertUseCase: ReceiptInsert,
     private val jokeInsertUseCase: JokeInsertUseCase,
     private val favoriteReceiptDeleteUseCase: FavoriteReceiptDeleteUseCase,
+    private val favoriteReceiptAllDelete: FavoriteReceiptAllDelete,
     application: Application
 ):AndroidViewModel(application) {
 
@@ -187,8 +188,8 @@ class MainViewModel @Inject constructor(
             favoriteReceiptDeleteUseCase.execute(favoritesEntity)
         }
 
-    fun deleteAllFacoriteRecipes() =
+    fun deleteAllFavoriteRecipes() =
         viewModelScope.launch (Dispatchers.IO) {
-            repository.deleteAllFavoriteRecipes()
+            favoriteReceiptAllDelete.execute()
         }
 }
