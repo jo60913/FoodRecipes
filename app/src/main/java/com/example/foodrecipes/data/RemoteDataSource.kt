@@ -1,8 +1,8 @@
 package com.example.foodrecipes.data
 
-import com.example.foodrecipes.module.FoodJoke
-import com.example.foodrecipes.module.FoodReceipt
-import com.example.foodrecipes.network.FoodReceiptApi
+import com.example.foodrecipes.data.module.FoodJoke
+import com.example.foodrecipes.data.module.FoodReceipt
+import com.example.foodrecipes.data.network.FoodReceiptApi
 import retrofit2.Response
 import javax.inject.Inject
 

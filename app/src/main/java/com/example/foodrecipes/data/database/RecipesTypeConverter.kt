@@ -1,7 +1,8 @@
 package com.example.foodrecipes.data.database
 
 import androidx.room.TypeConverter
-import com.example.foodrecipes.module.FoodReceipt
+import com.example.foodrecipes.data.module.FoodReceipt
+import com.example.foodrecipes.data.module.Result
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -15,19 +16,19 @@ class RecipesTypeConverter {
     }
 
     @TypeConverter
-    fun stringToFoodRecipe(data:String):FoodReceipt{
+    fun stringToFoodRecipe(data:String): FoodReceipt {
         val listType = object : TypeToken<FoodReceipt>() {}.type
         return gson.fromJson(data,listType)
     }
 
     @TypeConverter
-    fun resultToString(result:com.example.foodrecipes.module.Result):String{
+    fun resultToString(result: Result):String{
         return gson.toJson(result)
     }
 
     @TypeConverter
-    fun stringToResult(data:String):com.example.foodrecipes.module.Result{
-        val listType = object : TypeToken<com.example.foodrecipes.module.Result>() {}.type
+    fun stringToResult(data:String): Result {
+        val listType = object : TypeToken<Result>() {}.type
         return gson.fromJson(data,listType)
     }
 }

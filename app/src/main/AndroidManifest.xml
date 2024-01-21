@@ -7,7 +7,7 @@
 
 
     <application
-        android:name=".di.MyApplication"
+        android:name=".core.di.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="true"
@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.DetailActivity"
+            android:name=".presentation.ui.DetailActivity"
             android:exported="false"
             android:label="內容"
             android:theme="@style/Theme.FoodRecipes.NoActionBar">
@@ -28,7 +28,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".presentation.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FoodRecipes.NoActionBar">
@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".firebase.MyFirebaseMessageServer"
+            android:name=".core.firebase.MyFirebaseMessageServer"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

@@ -2,8 +2,8 @@ package com.example.foodrecipes.data.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.foodrecipes.module.FoodReceipt
-import com.example.foodrecipes.util.Constants.Companion.RECIPES_TABLE
+import com.example.foodrecipes.data.module.FoodReceipt
+import com.example.foodrecipes.core.util.Constants.Companion.RECIPES_TABLE
 
 @Entity(tableName = RECIPES_TABLE)
 class ReceipesEntity(

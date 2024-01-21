@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/recipesFragment"
-        android:name="com.example.foodrecipes.ui.fragment.main.RecipesFragment"
+        android:name="com.example.foodrecipes.presentation.ui.fragment.main.RecipesFragment"
         android:label="@string/common_food_receipt"
         tools:layout="@layout/fragment_recipes" >
         <action
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteRecipesFragment"
-        android:name="com.example.foodrecipes.ui.fragment.main.FavoriteRecipesFragment"
+        android:name="com.example.foodrecipes.presentation.ui.fragment.main.FavoriteRecipesFragment"
         android:label="@string/common_my_favorite"
         tools:layout="@layout/fragment_favorite_recipes" >
         <action
@@ -32,12 +32,12 @@
     </fragment>
     <fragment
         android:id="@+id/foodjokeFragment"
-        android:name="com.example.foodrecipes.ui.fragment.main.FoodjokeFragment"
+        android:name="com.example.foodrecipes.presentation.ui.fragment.main.FoodjokeFragment"
         android:label="@string/common_food_joke"
         tools:layout="@layout/fragment_foodjoke" />
     <dialog
         android:id="@+id/recipesBottomSheet"
-        android:name="com.example.foodrecipes.ui.bottomsheet.RecipesBottomSheet"
+        android:name="com.example.foodrecipes.presentation.ui.bottomsheet.RecipesBottomSheet"
         android:label="recipes_bottom_sheet"
         tools:layout="@layout/recipes_bottom_sheet" >
         <action
@@ -46,11 +46,11 @@
     </dialog>
     <activity
         android:id="@+id/detailActivity"
-        android:name="com.example.foodrecipes.ui.DetailActivity"
+        android:name="com.example.foodrecipes.presentation.ui.DetailActivity"
         android:label="Detail"
         tools:layout="@layout/activity_detail" >
         <argument
             android:name="result"
-            app:argType="com.example.foodrecipes.module.Result" />
+            app:argType="com.example.foodrecipes.data.module.Result" />
     </activity>
 </navigation>

@@ -3,8 +3,8 @@ package com.example.foodrecipes.data
 import androidx.lifecycle.LiveData
 import com.example.foodrecipes.data.database.entity.FavoritesEntity
 import com.example.foodrecipes.data.database.entity.FoodJokeEntity
-import com.example.foodrecipes.module.FoodJoke
-import com.example.foodrecipes.module.FoodReceipt
+import com.example.foodrecipes.data.module.FoodJoke
+import com.example.foodrecipes.data.module.FoodReceipt
 import retrofit2.Response
 import com.example.foodrecipes.data.database.entity.ReceipesEntity
 import kotlinx.coroutines.flow.Flow

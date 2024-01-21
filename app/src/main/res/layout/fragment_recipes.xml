@@ -6,14 +6,14 @@
     <data>
         <variable
             name="mainViewModel"
-            type="com.example.foodrecipes.viewmodel.MainViewModel" />
+            type="com.example.foodrecipes.presentation.viewmodel.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/lightGray"
-        tools:context=".ui.fragment.main.RecipesFragment">
+        tools:context=".presentation.ui.fragment.main.RecipesFragment">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="0dp"

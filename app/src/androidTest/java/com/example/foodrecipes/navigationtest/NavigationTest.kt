@@ -11,13 +11,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
-import com.example.foodrecipes.ui.MainActivity
+import com.example.foodrecipes.presentation.ui.MainActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 import com.example.foodrecipes.R
-import com.example.foodrecipes.ui.fragment.main.RecipesFragment
+import com.example.foodrecipes.presentation.ui.fragment.main.RecipesFragment
 import org.junit.Before
 
 @MediumTest

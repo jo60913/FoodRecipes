@@ -4,7 +4,7 @@ import com.example.foodrecipes.data.database.entity.ReceipesEntity
 import com.example.foodrecipes.data.database.RecipesDao
 import com.example.foodrecipes.data.database.entity.FavoritesEntity
 import com.example.foodrecipes.data.database.entity.FoodJokeEntity
-import com.example.foodrecipes.module.FoodJoke
+import com.example.foodrecipes.data.module.FoodJoke
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

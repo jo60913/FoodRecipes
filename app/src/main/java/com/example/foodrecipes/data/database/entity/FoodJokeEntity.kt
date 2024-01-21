@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.foodrecipes.module.FoodJoke
-import com.example.foodrecipes.util.Constants.Companion.FOOD_JOKE_TABLE
+import com.example.foodrecipes.data.module.FoodJoke
+import com.example.foodrecipes.core.util.Constants.Companion.FOOD_JOKE_TABLE
 import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = FOOD_JOKE_TABLE)
