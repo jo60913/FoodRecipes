@@ -12,6 +12,7 @@ import com.example.foodrecipes.data.database.entity.ReceipesEntity
 import com.example.foodrecipes.data.module.FoodJoke
 import com.example.foodrecipes.data.module.FoodReceipt
 import com.example.foodrecipes.core.util.NetworkResult
+import com.example.foodrecipes.domain.SearchReceiptUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: IRepository,
+    private val searchReceiptUseCase: SearchReceiptUseCase,
     application: Application
 ):AndroidViewModel(application) {
 
@@ -71,7 +73,7 @@ class MainViewModel @Inject constructor(
         searchRecipesResponse.value = NetworkResult.Loading()
         if(hasInternetConnection()){
             try {
-                val response = repository.searchRecipes(searchQuery)
+                val response = searchReceiptUseCase.execute(searchQuery)
                 searchRecipesResponse.value = handleFoodRecipesresponse(response)
             }catch (e:java.lang.Exception){
                 searchRecipesResponse.value = NetworkResult.Error("找不到食譜")
@@ -85,7 +87,7 @@ class MainViewModel @Inject constructor(
         recipesResponse.value = NetworkResult.Loading()
         if(hasInternetConnection()){
             try {
-                val response = repository.getRecipes(queries)
+                val response = searchReceiptUseCase.execute(queries)
                 recipesResponse.value = handleFoodRecipesresponse(response)
 
                 val foodReceipt = recipesResponse.value!!.data
