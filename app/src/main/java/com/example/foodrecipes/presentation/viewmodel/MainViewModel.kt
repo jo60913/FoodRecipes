@@ -12,6 +12,7 @@ import com.example.foodrecipes.data.database.entity.ReceipesEntity
 import com.example.foodrecipes.data.module.FoodJoke
 import com.example.foodrecipes.data.module.FoodReceipt
 import com.example.foodrecipes.core.util.NetworkResult
+import com.example.foodrecipes.domain.DownloadFoodJoke
 import com.example.foodrecipes.domain.SearchReceiptUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val repository: IRepository,
     private val searchReceiptUseCase: SearchReceiptUseCase,
+    private val downloadFoodJoke: DownloadFoodJoke,
     application: Application
 ):AndroidViewModel(application) {
 
@@ -55,7 +57,7 @@ class MainViewModel @Inject constructor(
         foodjokeResponse.value = NetworkResult.Loading()
         if(hasInternetConnection()){
             try {
-                val response = repository.getFoodJoke(apikey)
+                val response = downloadFoodJoke.execute(apikey)
                 foodjokeResponse.value = handleFoodJokeResponse(response)
 
                 val foodjoke = foodjokeResponse.value!!.data
