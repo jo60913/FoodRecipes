@@ -13,6 +13,7 @@ import com.example.foodrecipes.data.module.FoodJoke
 import com.example.foodrecipes.data.module.FoodReceipt
 import com.example.foodrecipes.core.util.NetworkResult
 import com.example.foodrecipes.domain.DownloadFoodJoke
+import com.example.foodrecipes.domain.ReceiptInsert
 import com.example.foodrecipes.domain.SearchReceiptUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,7 @@ class MainViewModel @Inject constructor(
     private val repository: IRepository,
     private val searchReceiptUseCase: SearchReceiptUseCase,
     private val downloadFoodJoke: DownloadFoodJoke,
+    private val receiptInsertUseCase: ReceiptInsert,
     application: Application
 ):AndroidViewModel(application) {
 
@@ -170,9 +172,9 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun insertFacoriteRecipes(favoritesEntity: FavoritesEntity) =
+    fun insertFavoriteRecipes(favoritesEntity: FavoritesEntity) =
         viewModelScope.launch (Dispatchers.IO) {
-            repository.insertFavoriteRecipes(favoritesEntity)
+            receiptInsertUseCase.execute(favoritesEntity)
         }
 
     fun insertFoodJoke(foodJokeEntity:FoodJokeEntity) =

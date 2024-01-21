@@ -104,7 +104,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun saveToFavorite(item: MenuItem) {
         val favoritesEntity = FavoritesEntity(0,args.result)
-        mainviewmodel.insertFacoriteRecipes(favoritesEntity)
+        mainviewmodel.insertFavoriteRecipes(favoritesEntity)
         changeMenuItemColor(item,R.color.yellow)
         showSnackbar("食譜儲存")
         recipeSave = true
