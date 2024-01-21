@@ -17,6 +17,7 @@ import com.example.foodrecipes.core.util.Constants.Companion.QUERY_FILL_INGREDIE
 import com.example.foodrecipes.core.util.Constants.Companion.QUERY_NUMBER
 import com.example.foodrecipes.core.util.Constants.Companion.QUERY_SEARCH
 import com.example.foodrecipes.core.util.Constants.Companion.QUERY_TYPE
+import com.example.foodrecipes.domain.MealAndDietTypeSaveUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipesViewModel @Inject constructor(
     application: Application,
-    private val dataStoreRepository: DataStoreRepositoryImpl
+    private val dataStoreRepository: DataStoreRepositoryImpl,
+    private val mealAndDietTypeSaveUseCase: MealAndDietTypeSaveUseCase
 ) : AndroidViewModel(application) {
 
     private var mealType = DEFAULT_MEAL_TYPE
@@ -41,9 +43,9 @@ class RecipesViewModel @Inject constructor(
         mealTypeId: Int,
         dietType: String,
         dietTypeId: Int
-    ){
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.saveMealAndDietType(
+            mealAndDietTypeSaveUseCase.execute(
                 mealType,
                 mealTypeId,
                 dietType,

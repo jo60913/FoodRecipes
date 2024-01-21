@@ -18,8 +18,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import okio.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ActivityRetainedScoped
+@Singleton
 class DataStoreRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : IDataStoreRepository {

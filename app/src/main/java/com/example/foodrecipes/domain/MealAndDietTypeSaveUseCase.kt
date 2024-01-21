@@ -5,13 +5,15 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-class MealAndDietTypeSave @Inject constructor(
+class MealAndDietTypeSaveUseCase @Inject constructor(
     private val dataStoreRepositoryImpl: IDataStoreRepository
-){
-    suspend fun execute(mealType: String,
-                        mealTypeId: Int,
-                        dietType: String,
-                        dietTypeId: Int) = dataStoreRepositoryImpl.saveMealAndDietType(
+) {
+    suspend fun execute(
+        mealType: String,
+        mealTypeId: Int,
+        dietType: String,
+        dietTypeId: Int
+    ) = dataStoreRepositoryImpl.saveMealAndDietType(
         mealType,
         mealTypeId,
         dietType,
