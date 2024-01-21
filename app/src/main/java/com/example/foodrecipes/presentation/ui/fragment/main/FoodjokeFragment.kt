@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.example.foodrecipes.R
 import com.example.foodrecipes.databinding.FragmentFoodjokeBinding
 import com.example.foodrecipes.core.util.Constants.Companion.API_KEY
 import com.example.foodrecipes.core.util.NetworkResult
@@ -31,7 +30,7 @@ class FoodjokeFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.mainViewModel = this.mainViewModel
         mainViewModel.getFoodJoke(API_KEY)
-        mainViewModel.foodjokeResponse.observe(viewLifecycleOwner){
+        mainViewModel.foodJokeResponse.observe(viewLifecycleOwner){
             when(it){
                 is NetworkResult.Success->{
                     binding.foodJokeTextView.text = it.data?.text

@@ -35,17 +35,17 @@ class MainViewModel @Inject constructor(
     val readRecipes:LiveData<List<ReceipesEntity>> = repository.readRecipes().asLiveData()
     val readFavoriteRecipes:LiveData<List<FavoritesEntity>> = repository.readFavoriteRecipes().asLiveData()
     val readFoodJoke:LiveData<List<FoodJokeEntity>> = repository.readFoodJoke().asLiveData()
-    private fun insertRecipes(receipesEntity: ReceipesEntity) =
+    private fun insertRecipes(recipesEntity: ReceipesEntity) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertRecipes(receipesEntity)
+            repository.insertRecipes(recipesEntity)
         }
 
     /** Retrofit */
     var recipesResponse : MutableLiveData<NetworkResult<FoodReceipt>> = MutableLiveData()
     var searchRecipesResponse : MutableLiveData<NetworkResult<FoodReceipt>> = MutableLiveData()
-    var foodjokeResponse :MutableLiveData<NetworkResult<FoodJoke>> = MutableLiveData()
+    var foodJokeResponse :MutableLiveData<NetworkResult<FoodJoke>> = MutableLiveData()
     fun getRecipes(queries : Map<String,String>) = viewModelScope.launch {
-        getReceipesSafeCall(queries)
+        getRecipesSafeCall(queries)
     }
 
     fun searchRecipes(searchQuery:Map<String,String>) = viewModelScope.launch {
@@ -53,24 +53,24 @@ class MainViewModel @Inject constructor(
     }
 
     fun getFoodJoke(apikey:String) = viewModelScope.launch{
-        getfoodjokeSafeCall(apikey)
+        getFoodJokeSafeCall(apikey)
     }
 
-    private suspend fun getfoodjokeSafeCall(apikey: String) {
-        foodjokeResponse.value = NetworkResult.Loading()
+    private suspend fun getFoodJokeSafeCall(apikey: String) {
+        foodJokeResponse.value = NetworkResult.Loading()
         if(hasInternetConnection()){
             try {
                 val response = downloadFoodJoke.execute(apikey)
-                foodjokeResponse.value = handleFoodJokeResponse(response)
+                foodJokeResponse.value = handleFoodJokeResponse(response)
 
-                val foodjoke = foodjokeResponse.value!!.data
-                if(foodjoke != null)
-                    offlineCacheFoodjoke(foodjoke)
+                val foodJoke = foodJokeResponse.value!!.data
+                if(foodJoke != null)
+                    offlineCacheFoodJoke(foodJoke)
             }catch (e:java.lang.Exception){
-                foodjokeResponse.value = NetworkResult.Error("找不到食譜")
+                foodJokeResponse.value = NetworkResult.Error("找不到食譜")
             }
         }else{
-            foodjokeResponse.value = NetworkResult.Error("沒有網路")
+            foodJokeResponse.value = NetworkResult.Error("沒有網路")
         }
     }
 
@@ -79,7 +79,7 @@ class MainViewModel @Inject constructor(
         if(hasInternetConnection()){
             try {
                 val response = searchReceiptUseCase.execute(searchQuery)
-                searchRecipesResponse.value = handleFoodRecipesresponse(response)
+                searchRecipesResponse.value = handleFoodReceiptResponse(response)
             }catch (e:java.lang.Exception){
                 searchRecipesResponse.value = NetworkResult.Error("找不到食譜")
             }
@@ -88,12 +88,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getReceipesSafeCall(queries: Map<String, String>) {
+    private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
         recipesResponse.value = NetworkResult.Loading()
         if(hasInternetConnection()){
             try {
                 val response = searchReceiptUseCase.execute(queries)
-                recipesResponse.value = handleFoodRecipesresponse(response)
+                recipesResponse.value = handleFoodReceiptResponse(response)
 
                 val foodReceipt = recipesResponse.value!!.data
                 if(foodReceipt != null)
@@ -129,15 +129,15 @@ class MainViewModel @Inject constructor(
         insertRecipes(recipesEntity)
     }
 
-    private fun offlineCacheFoodjoke(foodJoke: FoodJoke) {
-        val foodjoke  = FoodJokeEntity(foodJoke)
-        insertFoodJoke(foodjoke)
+    private fun offlineCacheFoodJoke(foodJoke: FoodJoke) {
+        val foodJokeEntity  = FoodJokeEntity(foodJoke)
+        insertFoodJoke(foodJokeEntity)
     }
 
     /**
      * 把回傳的資料轉為NetworkResult
      */
-    private fun handleFoodRecipesresponse(response: Response<FoodReceipt>): NetworkResult<FoodReceipt> {
+    private fun handleFoodReceiptResponse(response: Response<FoodReceipt>): NetworkResult<FoodReceipt> {
         when{
             response.message().toString().contains("timeout")->{
                 return NetworkResult.Error("超時")
