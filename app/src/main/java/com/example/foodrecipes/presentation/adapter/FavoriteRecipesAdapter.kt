@@ -1,6 +1,5 @@
 package com.example.foodrecipes.presentation.adapter
 
-import android.util.Log
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -101,7 +100,7 @@ class FavoriteRecipesAdapter(
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?):Boolean{
         if(item?.itemId == R.id.delete_favorite_recipe_menu){
             selectedRecipes.forEach {
-                mainViewModel.deleteFacoriteRecipes(it)
+                mainViewModel.deleteFavoriteRecipes(it)
             }
             showSnackbar("刪除${selectedRecipes.size}個食譜")
             multiSelection = false

@@ -12,10 +12,7 @@ import com.example.foodrecipes.data.database.entity.ReceipesEntity
 import com.example.foodrecipes.data.module.FoodJoke
 import com.example.foodrecipes.data.module.FoodReceipt
 import com.example.foodrecipes.core.util.NetworkResult
-import com.example.foodrecipes.domain.DownloadFoodJoke
-import com.example.foodrecipes.domain.JokeInsertUseCase
-import com.example.foodrecipes.domain.ReceiptInsert
-import com.example.foodrecipes.domain.SearchReceiptUseCase
+import com.example.foodrecipes.domain.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,6 +26,7 @@ class MainViewModel @Inject constructor(
     private val downloadFoodJoke: DownloadFoodJoke,
     private val receiptInsertUseCase: ReceiptInsert,
     private val jokeInsertUseCase: JokeInsertUseCase,
+    private val favoriteReceiptDeleteUseCase: FavoriteReceiptDeleteUseCase,
     application: Application
 ):AndroidViewModel(application) {
 
@@ -107,7 +105,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun handleFoodJokeResponse(response: Response<FoodJoke>): NetworkResult<FoodJoke>? {
+    private fun handleFoodJokeResponse(response: Response<FoodJoke>): NetworkResult<FoodJoke> {
         return when {
             response.message().toString().contains("timeout") -> {
                 NetworkResult.Error("Timeout")
@@ -138,7 +136,7 @@ class MainViewModel @Inject constructor(
     /**
      * 把回傳的資料轉為NetworkResult
      */
-    private fun handleFoodRecipesresponse(response: Response<FoodReceipt>): NetworkResult<FoodReceipt>? {
+    private fun handleFoodRecipesresponse(response: Response<FoodReceipt>): NetworkResult<FoodReceipt> {
         when{
             response.message().toString().contains("timeout")->{
                 return NetworkResult.Error("超時")
@@ -146,7 +144,7 @@ class MainViewModel @Inject constructor(
             response.code() == 402->{
                 return NetworkResult.Error("api key過期")
             }
-            response.body()!!.results.isNullOrEmpty()->{
+            response.body()!!.results.isEmpty()->{
                 return NetworkResult.Error("找不到食譜")
             }
             response.isSuccessful ->{
@@ -179,14 +177,14 @@ class MainViewModel @Inject constructor(
             receiptInsertUseCase.execute(favoritesEntity)
         }
 
-    fun insertFoodJoke(foodJokeEntity:FoodJokeEntity) =
+    private fun insertFoodJoke(foodJokeEntity:FoodJokeEntity) =
         viewModelScope.launch(Dispatchers.IO) {
             jokeInsertUseCase.execute(foodJokeEntity)
         }
 
-    fun deleteFacoriteRecipes(favoritesEntity: FavoritesEntity) =
+    fun deleteFavoriteRecipes(favoritesEntity: FavoritesEntity) =
         viewModelScope.launch (Dispatchers.IO) {
-            repository.deleteFavoriteRecipe(favoritesEntity)
+            favoriteReceiptDeleteUseCase.execute(favoritesEntity)
         }
 
     fun deleteAllFacoriteRecipes() =

@@ -115,7 +115,7 @@ class DetailActivity : AppCompatActivity() {
             saveRecipeId,
             args.result
         )
-        mainviewmodel.deleteFacoriteRecipes(favoritesEntity)
+        mainviewmodel.deleteFavoriteRecipes(favoritesEntity)
         changeMenuItemColor(item,R.color.white)
         showSnackbar("我的最愛已刪除")
         recipeSave = false
