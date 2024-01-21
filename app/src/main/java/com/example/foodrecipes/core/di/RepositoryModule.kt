@@ -1,5 +1,7 @@
 package com.example.foodrecipes.core.di
 
+import com.example.foodrecipes.data.DataStoreRepositoryImpl
+import com.example.foodrecipes.data.IDataStoreRepository
 import com.example.foodrecipes.data.IRepository
 import com.example.foodrecipes.data.Repository
 import dagger.Binds
@@ -12,4 +14,7 @@ import dagger.hilt.components.SingletonComponent
 abstract class RepositoryModule {
     @Binds
     abstract fun bindIRepository(implement: Repository): IRepository
+
+    @Binds
+    abstract fun bindIDataStoreRepository(implement: DataStoreRepositoryImpl): IDataStoreRepository
 }

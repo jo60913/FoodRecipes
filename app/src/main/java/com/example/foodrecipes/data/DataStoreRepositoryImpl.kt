@@ -11,7 +11,6 @@ import com.example.foodrecipes.core.util.Constants.Companion.PREFERENCES_DIET_TY
 import com.example.foodrecipes.core.util.Constants.Companion.PREFERENCES_MEAL_TYPE
 import com.example.foodrecipes.core.util.Constants.Companion.PREFERENCES_MEAL_TYPE_ID
 import com.example.foodrecipes.core.util.Constants.Companion.PREFERENCES_NAME
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
@@ -21,9 +20,9 @@ import okio.IOException
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-class DataStoreRepository @Inject constructor(
+class DataStoreRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context
-) {
+) : IDataStoreRepository {
 
 
     /**
@@ -41,7 +40,7 @@ class DataStoreRepository @Inject constructor(
         name = PREFERENCES_NAME
     )
 
-    suspend fun saveMealAndDietType(
+    override suspend fun saveMealAndDietType(
         mealType:String,
         mealTypeId:Int,
         dietType:String,
@@ -56,7 +55,7 @@ class DataStoreRepository @Inject constructor(
         }
     }
 
-    suspend fun saveBackOnline(backonline:Boolean){
+    override suspend fun saveBackOnline(backonline:Boolean){
         dataStore.edit {
             it[PreferenceKey.backOnline] = backonline
         }

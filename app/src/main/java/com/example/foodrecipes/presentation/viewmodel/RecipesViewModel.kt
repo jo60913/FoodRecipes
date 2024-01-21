@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.foodrecipes.data.DataStoreRepository
+import com.example.foodrecipes.data.DataStoreRepositoryImpl
 import com.example.foodrecipes.core.util.Constants.Companion.API_KEY
 import com.example.foodrecipes.core.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.example.foodrecipes.core.util.Constants.Companion.DEFAULT_MEAL_TYPE
@@ -25,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RecipesViewModel @Inject constructor(
     application: Application,
-    private val dataStoreRepository: DataStoreRepository
+    private val dataStoreRepository: DataStoreRepositoryImpl
 ) : AndroidViewModel(application) {
 
     private var mealType = DEFAULT_MEAL_TYPE
