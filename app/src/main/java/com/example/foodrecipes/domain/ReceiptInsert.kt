@@ -6,7 +6,7 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 
 /**
- * 寫入笑話
+ * 將食譜寫到我的最愛
  */
 @ActivityRetainedScoped
 class ReceiptInsert @Inject constructor(
