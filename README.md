@@ -9,4 +9,6 @@ https://naruto60913.medium.com/%E9%A3%9F%E8%AD%9Capp%E4%BB%8B%E7%B4%B9-4488f770d
 ＊使用FCM來推播
 ＊使用Firebase Analytics來記錄使用者旅程
 
-預計未來半年內會加上測試類
+2024/1
+* 目錄改為clean architecture 架構
+* 邏輯寫在usecase當中
