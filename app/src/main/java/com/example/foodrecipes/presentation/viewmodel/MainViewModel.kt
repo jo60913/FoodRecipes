@@ -13,6 +13,7 @@ import com.example.foodrecipes.data.module.FoodJoke
 import com.example.foodrecipes.data.module.FoodReceipt
 import com.example.foodrecipes.core.util.NetworkResult
 import com.example.foodrecipes.domain.DownloadFoodJoke
+import com.example.foodrecipes.domain.JokeInsertUseCase
 import com.example.foodrecipes.domain.ReceiptInsert
 import com.example.foodrecipes.domain.SearchReceiptUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +28,7 @@ class MainViewModel @Inject constructor(
     private val searchReceiptUseCase: SearchReceiptUseCase,
     private val downloadFoodJoke: DownloadFoodJoke,
     private val receiptInsertUseCase: ReceiptInsert,
+    private val jokeInsertUseCase: JokeInsertUseCase,
     application: Application
 ):AndroidViewModel(application) {
 
@@ -179,7 +181,7 @@ class MainViewModel @Inject constructor(
 
     fun insertFoodJoke(foodJokeEntity:FoodJokeEntity) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertFoodJoke(foodJokeEntity)
+            jokeInsertUseCase.execute(foodJokeEntity)
         }
 
     fun deleteFacoriteRecipes(favoritesEntity: FavoritesEntity) =
