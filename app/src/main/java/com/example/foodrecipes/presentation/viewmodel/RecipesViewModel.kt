@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.foodrecipes.data.DataStoreRepository
-import com.example.foodrecipes.core.util.Constants
 import com.example.foodrecipes.core.util.Constants.Companion.API_KEY
 import com.example.foodrecipes.core.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.example.foodrecipes.core.util.Constants.Companion.DEFAULT_MEAL_TYPE
@@ -19,7 +18,6 @@ import com.example.foodrecipes.core.util.Constants.Companion.QUERY_NUMBER
 import com.example.foodrecipes.core.util.Constants.Companion.QUERY_SEARCH
 import com.example.foodrecipes.core.util.Constants.Companion.QUERY_TYPE
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,7 +28,7 @@ class RecipesViewModel @Inject constructor(
     private val dataStoreRepository: DataStoreRepository
 ) : AndroidViewModel(application) {
 
-    private var mealtype = DEFAULT_MEAL_TYPE
+    private var mealType = DEFAULT_MEAL_TYPE
     private var dietType = DEFAULT_DIET_TYPE
 
     val realMealAndDietType = dataStoreRepository.realMealAndDietType
@@ -54,22 +52,22 @@ class RecipesViewModel @Inject constructor(
         }
     }
 
-    fun saveBackOnline(backonline:Boolean) =
+    private fun saveBackOnline(backOnline:Boolean) =
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.saveBackOnline(backonline)
+            dataStoreRepository.saveBackOnline(backOnline)
         }
 
     fun allyQuery(): HashMap<String, String> {
         viewModelScope.launch {
             realMealAndDietType.collect{
-                mealtype = it.selectedDietType
+                mealType = it.selectedDietType
                 dietType = it.selectedDietType
             }
         }
         val query: HashMap<String, String> = HashMap()
         query[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         query[QUERY_API_KEY] = API_KEY
-        query[QUERY_TYPE] = mealtype
+        query[QUERY_TYPE] = mealType
         query[QUERY_DIET] = dietType
         query[QUERY_ADD_RECIPE_INFORMATION] = "true"
         query[QUERY_FILL_INGREDIENTS] = "true"
@@ -77,7 +75,7 @@ class RecipesViewModel @Inject constructor(
     }
 
     fun applySearchQuery(searchQuery:String) : HashMap<String,String>{
-        val queries:HashMap<String,String> = HashMap<String,String>()
+        val queries:HashMap<String,String> = HashMap()
         queries[QUERY_SEARCH] = searchQuery
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
